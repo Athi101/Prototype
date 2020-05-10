@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,20 @@ public class MainActivity extends AppCompatActivity {
         bluetoothRecyclerView = findViewById(R.id.recycler_bluetooth_paired);
         bluetoothRecyclerView.setAdapter(bluetoothRecyclerViewAdapter);
 
+        bluetoothRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), bluetoothRecyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                    Intent intent = new Intent(getBaseContext(), Activity2.class);
+                    intent.putExtra("position", position);
+                    startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }) {
+        });
     }
 
     private void checkBluetoothState() {
